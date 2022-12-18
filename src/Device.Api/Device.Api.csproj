@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Device.Core\Device.Core.csproj" />
-    <ProjectReference Include="..\..\Device.Infrastructure\Device.Infrastructure.csproj" />
+    <ProjectReference Include="..\Device.Core\Device.Core.csproj" />
+    <ProjectReference Include="..\Device.Infrastructure\Device.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

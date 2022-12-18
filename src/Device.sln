@@ -5,9 +5,9 @@ VisualStudioVersion = 17.5.33209.295
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device.Api", "Device.Api\Device.Api.csproj", "{287809DD-D4BD-4AC9-8D5D-B40EFAC4009D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Device.Core", "..\Device.Core\Device.Core.csproj", "{505CACDA-9073-44E6-BC88-6E3306A26113}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Device.Core", "Device.Core\Device.Core.csproj", "{505CACDA-9073-44E6-BC88-6E3306A26113}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Device.Infrastructure", "..\Device.Infrastructure\Device.Infrastructure.csproj", "{B6E2AE89-207B-4D19-B94E-1B25347F237F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Device.Infrastructure", "Device.Infrastructure\Device.Infrastructure.csproj", "{B6E2AE89-207B-4D19-B94E-1B25347F237F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5F861470-C44C-4218-A7F7-2258D586CA0A}"
 	ProjectSection(SolutionItems) = preProject

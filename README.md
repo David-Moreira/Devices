@@ -1,4 +1,5 @@
 # Devices
+Simple .NET REST API
 
 ## Represented entities 
 - Device

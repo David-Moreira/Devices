@@ -5,15 +5,11 @@ using AutoMapper;
 using Device.Api.Controllers;
 using Device.Api.DTOs;
 using Device.Core.Services;
-
-
+using M = Device.Core.Models;
 
 using Microsoft.AspNetCore.Mvc;
 
-
-
 using NSubstitute;
-using M =  Device.Core.Models;
 
 using System;
 using System.Collections.Generic;

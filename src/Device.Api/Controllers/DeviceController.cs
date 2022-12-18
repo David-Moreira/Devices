@@ -79,6 +79,37 @@ namespace Device.Api.Controllers
         }
 
         /// <summary>
+        /// Patches an existing Device
+        /// </summary>
+        /// <response code="204">Device patched successfully.</response>
+        /// <response code="404">Not found</response>
+        [HttpPatch("{id:int}")]
+        [ProducesResponseType(typeof(DeviceDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<DeviceDto>> Patch([FromRoute] int id, [FromBody] DeviceCreateUpdateDto device)
+        {
+            var entity = await _deviceService.Get(id);
+            if (entity is null)
+                return NotFound();
+
+            if (!string.IsNullOrWhiteSpace(device.Name))
+            {
+                entity.Name = device.Name;
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(device.Brand))
+            {
+                entity.Brand = device.Brand;
+            }
+
+            var result = await _deviceService.Update(entity);
+            return result is null
+                ? NotFound()
+                : NoContent();
+        }
+
+        /// <summary>
         /// Deletes an existing Device
         /// </summary>
         /// <response code="204">Device has been deleted successfully</response>

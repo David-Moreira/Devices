@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Device.Core\Device.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repository\" />
+  </ItemGroup>
+
 </Project>

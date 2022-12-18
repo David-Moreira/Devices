@@ -6,7 +6,7 @@ COPY . .
 
 RUN dotnet restore src/Device.sln
 
-#RUN dotnet test ./tests/Device.Api.Tests/Device.Api.Tests.csproj -c Release
+RUN dotnet test ./tests/Device.Api.Tests/Device.Api.Tests.csproj -c Release
 RUN dotnet publish src/Device.sln -c Release -o release
 
 

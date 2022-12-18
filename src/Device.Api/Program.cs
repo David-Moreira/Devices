@@ -1,6 +1,7 @@
 using System.Reflection;
 
 using Device.Api.DTOs;
+using Device.Api.Middleware;
 using Device.Core.Repository;
 using Device.Core.Services;
 using Device.Infrastructure;
@@ -58,12 +59,10 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = string.Empty;
 });
 
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
-
-
 
 app.Run();

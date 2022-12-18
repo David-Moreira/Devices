@@ -4,6 +4,10 @@ namespace Device.Infrastructure
 {
     public class DeviceContext : DbContext
     {
+        public DeviceContext()
+        {
+            
+        }
         public DeviceContext(DbContextOptions<DeviceContext> options) : base(options)
         {
             

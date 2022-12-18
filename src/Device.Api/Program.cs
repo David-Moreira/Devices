@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var useSqlServer = bool.TryParse(builder.Configuration["Database:UseSqlServer"], out var sqlServerResult) && sqlServerResult;
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -28,8 +28,11 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(xmlPath);
 });
 
+if (useSqlServer)
+    builder.Services.AddDbContext<DeviceContext>(x => x.UseSqlServer(builder.Configuration["Database:ConnectionString"]));
+else
+    builder.Services.AddDbContext<DeviceContext>(x => x.UseInMemoryDatabase("InMemoryDb"));
 
-builder.Services.AddDbContext<DeviceContext>(x => x.UseInMemoryDatabase("InMemoryDb"));
 builder.Services.AddScoped<IDeviceService, DeviceService>();
 builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
 
@@ -41,6 +44,13 @@ builder.Services.AddAutoMapper(cfg =>
 
 var app = builder.Build();
 
+if (useSqlServer)
+{
+    //Not the best approach for migrations.
+    using var serviceScope = app.Services.CreateScope();
+    serviceScope.ServiceProvider.GetService<DeviceContext>().Database.Migrate();
+}
+
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
@@ -48,11 +58,11 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = string.Empty;
 });
 
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 
 

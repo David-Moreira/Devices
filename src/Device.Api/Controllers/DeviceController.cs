@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 
 using Device.Api.DTOs;
-using Device.Core.Models;
 using Device.Core.Services;
 
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +19,6 @@ namespace Device.Api.Controllers
             this._deviceService = deviceService;
             this._mapper = mapper;
         }
-
 
         /// <summary>
         /// Creates a new Device
@@ -61,7 +59,6 @@ namespace Device.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<DeviceDto>), 200)]
         public async Task<ActionResult<IEnumerable<DeviceDto>>> GetAll()
             => Ok(_mapper.Map<IEnumerable<DeviceDto>>(await _deviceService.GetAll()));
-
 
         /// <summary>
         /// Updates an existing Device
@@ -104,6 +101,5 @@ namespace Device.Api.Controllers
         public async Task<ActionResult<IEnumerable<DeviceDto>>> GetByBrand([FromRoute] string brand)
 
             => Ok(_mapper.Map<IEnumerable<DeviceDto>>(await _deviceService.GetByBrand(brand)));
-
     }
 }

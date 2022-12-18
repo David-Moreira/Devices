@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using Device.Core.Repository;
 
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +6,6 @@ using M = Device.Core.Models;
 
 namespace Device.Infrastructure.Repository
 {
-
     public class DeviceRepository : IDeviceRepository
     {
         private readonly DeviceContext _dbContext;
@@ -34,11 +28,11 @@ namespace Device.Infrastructure.Repository
         public async Task<IEnumerable<M.Device>> GetAll()
             => await _dbContext.Set<M.Device>().ToListAsync();
 
-
         public async Task<M.Device> Update(M.Device device)
         {
             var entity = await _dbContext.Set<M.Device>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == device.Id);
-            if (entity is null) return null;
+            if (entity is null)
+                return null;
 
             _dbContext.Update(device);
             await _dbContext.SaveChangesAsync();
@@ -49,7 +43,8 @@ namespace Device.Infrastructure.Repository
         public async Task<bool> Delete(int id)
         {
             var entity = await Get(id);
-            if (entity is null) return false;
+            if (entity is null)
+                return false;
 
             _dbContext.Remove(entity);
             await _dbContext.SaveChangesAsync();

@@ -1,5 +1,3 @@
-using System;
-
 namespace Device.Api.DTOs
 {
     public record DeviceDto

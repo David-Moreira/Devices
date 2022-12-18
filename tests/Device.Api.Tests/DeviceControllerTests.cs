@@ -5,17 +5,12 @@ using AutoMapper;
 using Device.Api.Controllers;
 using Device.Api.DTOs;
 using Device.Core.Services;
-using M = Device.Core.Models;
 
 using Microsoft.AspNetCore.Mvc;
 
 using NSubstitute;
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using Xunit;
+using M = Device.Core.Models;
 
 namespace Device.Api.Tests
 {
@@ -30,10 +25,8 @@ namespace Device.Api.Tests
         {
             _mapper = new Mapper(new MapperConfiguration(cfg =>
             {
-
                 cfg.CreateMap<Device.Core.Models.Device, DeviceDto>().ReverseMap();
                 cfg.CreateMap<DeviceCreateUpdateDto, Device.Core.Models.Device>();
-
             }));
 
             _sut = new(_service, _mapper);
@@ -73,7 +66,6 @@ namespace Device.Api.Tests
             Assert.Equal(expectedMapped, okObjectResult.Value);
             await _service.Received(1).Get(requestId);
         }
-
 
         [Fact]
         public async Task Get_Returns_NotFound()

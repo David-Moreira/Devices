@@ -1,31 +1,16 @@
-﻿using Device.Api.Controllers;
-using Device.Api.DTOs;
+﻿using AutoFixture;
+
+using Device.Core.Repository;
 using Device.Core.Services;
-using M = Device.Core.Models;
-using AutoFixture;
-
-using AutoMapper;
-
-
-using Microsoft.AspNetCore.Mvc;
-
 
 using NSubstitute;
 
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Xunit;
-using Device.Core.Repository;
+using M = Device.Core.Models;
 
 namespace Device.Api.Tests
 {
     public class DeviceServiceTests
     {
-
         private readonly DeviceService _sut;
         private readonly IDeviceRepository _repository = Substitute.For<IDeviceRepository>();
         private readonly IFixture _fixture = new Fixture();
@@ -62,7 +47,6 @@ namespace Device.Api.Tests
             Assert.Equal(expected, actual);
             await _repository.Received(1).Get(expected.Id);
         }
-
 
         [Fact]
         public async Task Create_Returns_Created_WhenSuccess()
@@ -110,6 +94,5 @@ namespace Device.Api.Tests
             Assert.True(actual);
             await _repository.Received(1).Delete(expected.Id);
         }
-
     }
 }

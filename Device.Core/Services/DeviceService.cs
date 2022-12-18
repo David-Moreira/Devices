@@ -24,25 +24,25 @@ namespace Device.Core.Services
 
     }
 
-    public class DeviceService
+    public class DeviceService : IDeviceService
     {
         private readonly IDeviceRepository _deviceRepository;
 
         public DeviceService(IDeviceRepository deviceRepository)
             => this._deviceRepository = deviceRepository;
-        Task<M.Device> Create(M.Device device)
+        public Task<M.Device> Create(M.Device device)
             => _deviceRepository.Create(device);
 
-        Task<M.Device> Get(int id)
+        public Task<M.Device> Get(int id)
             => _deviceRepository.Get(id);
-        Task<IEnumerable<M.Device>> GetAll()
+        public Task<IEnumerable<M.Device>> GetAll()
             => _deviceRepository.GetAll();
-        Task<M.Device> Update(M.Device device)
+        public Task<M.Device> Update(M.Device device)
             => _deviceRepository.Update(device);
-        Task<bool> Delete(int id)
+        public Task<bool> Delete(int id)
             => _deviceRepository.Delete(id);
 
-        Task<IEnumerable<M.Device>> GetByBrand(string brand)
+        public Task<IEnumerable<M.Device>> GetByBrand(string brand)
             => _deviceRepository.GetByBrand(brand);
 
     }

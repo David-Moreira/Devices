@@ -34,7 +34,7 @@ namespace Device.Api.Controllers
         {
             var deviceModel = _mapper.Map<Models.Device>(device);
             var result = await _deviceService.Create(deviceModel);
-            return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
+            return CreatedAtAction(nameof(Get), new { id = result.Id }, _mapper.Map<DeviceDto>(result));
         }
 
         /// <summary>

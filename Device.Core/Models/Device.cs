@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Device.Core.Models
 {
-    public class Device
+    public record Device
     {
         public int Id { get; set; }
         public string Name { get; set; }

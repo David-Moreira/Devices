@@ -1,4 +1,7 @@
-﻿using Device.Core.Models;
+﻿using AutoMapper;
+
+using Device.Api.DTOs;
+using Device.Core.Models;
 using Device.Core.Services;
 
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +13,13 @@ namespace Device.Api.Controllers
     public class DeviceController : Controller
     {
         private readonly IDeviceService _deviceService;
+        private readonly IMapper _mapper;
 
-        public DeviceController(IDeviceService deviceService)
-            => this._deviceService = deviceService;
+        public DeviceController(IDeviceService deviceService, IMapper mapper)
+        {
+            this._deviceService = deviceService;
+            this._mapper = mapper;
+        }
 
 
         /// <summary>
@@ -21,11 +28,12 @@ namespace Device.Api.Controllers
         /// <response code="201">Returns the created Device</response>
         /// <response code="400">Validation Error</response>
         [HttpPost("")]
-        [ProducesResponseType(typeof(Models.Device), 201)]
+        [ProducesResponseType(typeof(DeviceDto), 201)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-        public async Task<ActionResult<Models.Device>> Post([FromBody] Models.Device device)
+        public async Task<ActionResult<DeviceDto>> Post([FromBody] DeviceCreateUpdateDto device)
         {
-            var result = await _deviceService.Create(device);
+            var deviceModel = _mapper.Map<Models.Device>(device);
+            var result = await _deviceService.Create(deviceModel);
             return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
         }
 
@@ -35,14 +43,14 @@ namespace Device.Api.Controllers
         /// <response code="200">Returns an existing Device</response>
         /// <response code="404">Device was not found</response>
         [HttpGet("{id:int}")]
-        [ProducesResponseType(typeof(Models.Device), 200)]
-        public async Task<ActionResult<Models.Device>> Get([FromRoute] int id)
+        [ProducesResponseType(typeof(DeviceDto), 200)]
+        public async Task<ActionResult<DeviceDto>> Get([FromRoute] int id)
         {
             var device = await _deviceService.Get(id);
 
             return device is null
                 ? NotFound()
-                : Ok(device);
+                : Ok(_mapper.Map<DeviceDto>(device));
         }
 
         /// <summary>
@@ -50,9 +58,9 @@ namespace Device.Api.Controllers
         /// </summary>
         /// <response code="200">Returns all devices</response>
         [HttpGet("All")]
-        [ProducesResponseType(typeof(IEnumerable<Models.Device>), 200)]
-        public async Task<ActionResult<IEnumerable<Models.Device>>> GetAll()
-            => Ok(await _deviceService.GetAll());
+        [ProducesResponseType(typeof(IEnumerable<DeviceDto>), 200)]
+        public async Task<ActionResult<IEnumerable<DeviceDto>>> GetAll()
+            => Ok(_mapper.Map<IEnumerable<DeviceDto>>(await _deviceService.GetAll()));
 
 
         /// <summary>
@@ -61,15 +69,16 @@ namespace Device.Api.Controllers
         /// <response code="200">Returns the updated Device</response>
         /// <response code="400">Validation Error</response>
         [HttpPut("{id:int}")]
-        [ProducesResponseType(typeof(Models.Device), 200)]
+        [ProducesResponseType(typeof(DeviceDto), 200)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-        public async Task<ActionResult<Models.Device>> Put([FromRoute] int id, [FromBody] Models.Device device)
+        public async Task<ActionResult<DeviceDto>> Put([FromRoute] int id, [FromBody] DeviceCreateUpdateDto device)
         {
-            device.Id = id;
-            var result = await _deviceService.Update(device);
+            var deviceModel = _mapper.Map<Models.Device>(device);
+            deviceModel.Id = id;
+            var result = await _deviceService.Update(deviceModel);
             return result is null
                 ? NotFound()
-                : Ok(result);
+                : Ok(_mapper.Map<DeviceDto>(result));
         }
 
         /// <summary>
@@ -91,10 +100,10 @@ namespace Device.Api.Controllers
         /// </summary>
         /// <response code="200">Returns existing Devices by Brand</response>
         [HttpGet("ByBrand/{brand}")]
-        [ProducesResponseType(typeof(IEnumerable<Models.Device>), 200)]
-        public async Task<ActionResult<IEnumerable<Models.Device>>> GetByBrand([FromRoute] string brand)
+        [ProducesResponseType(typeof(IEnumerable<DeviceDto>), 200)]
+        public async Task<ActionResult<IEnumerable<DeviceDto>>> GetByBrand([FromRoute] string brand)
 
-            => Ok(await _deviceService.GetByBrand(brand));
+            => Ok(_mapper.Map<IEnumerable<DeviceDto>>(await _deviceService.GetByBrand(brand)));
 
     }
 }

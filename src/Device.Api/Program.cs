@@ -1,5 +1,6 @@
 using System.Reflection;
 
+using Device.Api.DTOs;
 using Device.Core.Repository;
 using Device.Core.Services;
 using Device.Infrastructure;
@@ -31,6 +32,12 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<DeviceContext>(x => x.UseInMemoryDatabase("InMemoryDb"));
 builder.Services.AddScoped<IDeviceService, DeviceService>();
 builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.CreateMap<Device.Core.Models.Device, DeviceDto>().ReverseMap();
+    cfg.CreateMap<DeviceCreateUpdateDto, Device.Core.Models.Device>();
+});
 
 var app = builder.Build();
 
